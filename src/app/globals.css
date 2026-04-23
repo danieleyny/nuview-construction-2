@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #0A0A0B;
+  --color-charcoal: #141416;
+  --color-graphite: #1E1E22;
+  --color-steel: #2A2A2E;
+
+  --color-bone: #F3EFE7;
+  --color-linen: #E8E2D5;
+  --color-ash: #8A8680;
+
+  --color-ember: #C8732B;
+  --color-ember-hot: #E8853A;
+  --color-ember-deep: #8A4E1C;
+
+  --color-success: #6FB38A;
+  --color-danger: #D46A5E;
+
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-sans: var(--font-geist), "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-quint: cubic-bezier(0.64, 0, 0.78, 0);
+}
+
+:root {
+  --obsidian: #0A0A0B;
+  --charcoal: #141416;
+  --graphite: #1E1E22;
+  --steel: #2A2A2E;
+  --bone: #F3EFE7;
+  --linen: #E8E2D5;
+  --ash: #8A8680;
+  --ember: #C8732B;
+  --ember-hot: #E8853A;
+  --ember-deep: #8A4E1C;
+
+  --fs-xs:   clamp(0.75rem,  0.72rem + 0.15vw, 0.81rem);
+  --fs-sm:   clamp(0.875rem, 0.84rem + 0.18vw, 0.94rem);
+  --fs-base: clamp(1rem,     0.96rem + 0.2vw,  1.06rem);
+  --fs-lg:   clamp(1.125rem, 1.07rem + 0.28vw, 1.25rem);
+  --fs-xl:   clamp(1.35rem,  1.25rem + 0.5vw,  1.625rem);
+  --fs-2xl:  clamp(1.75rem,  1.55rem + 1vw,    2.5rem);
+  --fs-3xl:  clamp(2.5rem,   2rem + 2.5vw,     4.5rem);
+  --fs-4xl:  clamp(3.5rem,   2.5rem + 5vw,     7rem);
+  --fs-5xl:  clamp(5rem,     3rem + 10vw,      12rem);
+
+  --hairline: 1px solid rgba(243, 239, 231, 0.08);
+  --hairline-strong: 1px solid rgba(243, 239, 231, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--obsidian);
+  color: var(--bone);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Lenis smooth scroll */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+::selection {
+  background: var(--ember);
+  color: var(--obsidian);
+}
+
+::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Typography utilities */
+.font-display { font-family: var(--font-display); font-feature-settings: "ss01", "ss02"; }
+.font-mono { font-family: var(--font-mono); }
+
+.tracking-tightest { letter-spacing: -0.04em; }
+.leading-none { line-height: 0.95; }
+
+/* Hairline utilities */
+.hairline-t { border-top: var(--hairline); }
+.hairline-b { border-bottom: var(--hairline); }
+.hairline-l { border-left: var(--hairline); }
+.hairline-r { border-right: var(--hairline); }
+.hairline { border: var(--hairline); }
+
+/* Cursor — hide default on pointer devices with our custom cursor */
+@media (pointer: fine) {
+  html.has-custom-cursor, html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+button, a { color: inherit; }
+
+/* Noise / grain overlay */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Ember underline animation */
+@keyframes ember-underline-in {
+  0% { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain::after { display: none; }
+}
